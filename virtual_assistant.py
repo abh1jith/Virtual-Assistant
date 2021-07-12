@@ -1,10 +1,17 @@
-# Importing all the files
+# Importing all the modules used in the code
+# GUI Module
 from tkinter import *
+# Text-to-Speech Module
 import pyttsx3
+# Threading
 import threading
+# Speech Recognition Module
 import speech_recognition as sr
+# Web-Browser Module
 import webbrowser
+# WolframAlpha API module
 import wolframalpha
+# Wikipedia API module
 import wikipedia
 
 
