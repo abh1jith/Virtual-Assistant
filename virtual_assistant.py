@@ -25,6 +25,8 @@ mic = sr.Microphone()
 search = Tk()
 # Set the title of the window
 search.title("Virtual Assistant by Abhijith")
+# Formatting the search window for better look
+search.config(bg = '#282828', highlightbackground = "black", highlightthickness = 5)
 # Initialising the Text-To-Speech
 audio = pyttsx3.init()
 
@@ -40,7 +42,7 @@ def searchquery(question):
 
         exit()
     # If the user wahts to open a specific website, the application opens it and terminates itself
-    if(lq == "open youtube"):
+    if("open youtube" in lq):
         audio.say("Opening Youtube")
         audio.runAndWait()
 
@@ -48,7 +50,7 @@ def searchquery(question):
 
         exit()
     # If the user wahts to open a specific website, the application opens it and terminates itself
-    if(lq == "open google"):
+    if("open google" in lq):
         audio.say("Opening Google")
         audio.runAndWait()
 
@@ -56,15 +58,12 @@ def searchquery(question):
 
         exit()
     # This is a specific question designed by the developer
-    if(lq == "who made you"):
+    if(("who made you" in lq) or ("who created you" in lq)):
         audio.say("My creator is the one and only great and the greatest GOD, Abhijith. I am so grateful for him.")
         audio.runAndWait()
         return
     
-    # If the query given doesn't match any of these we search for the query and display the result in a new window
-    result = Tk()
-    # Title of the result window
-    result.title("Search Result")
+    
 
     # We first check for the query in Wolfram Alpha.
     try:
@@ -74,8 +73,16 @@ def searchquery(question):
         res = client.query(question)
         ans = next(res.results).text
 
-        answer = Message(result, text = ans)
-        query = Label(result, text = question)
+        # Printing the search result in a new window
+        result = Tk()
+        # Title of the search window
+        result.title("Search Result")
+        # Initialising the background colour
+        result.config(bg = "White")
+        # Answer
+        answer = Message(result, text = ans, bg = "White", font = ("Serif", 10))
+        # Also displaying the query given
+        query = Label(result, text = question, bg = "White", font = ("Serif", 10))
 
         query.grid(row = 0, padx = 10, pady = 10)
         answer.grid(row = 2, padx = 10, pady = 10)
@@ -90,9 +97,15 @@ def searchquery(question):
         # Wikipoedia
         try:
             ans = wikipedia.summary(question, sentences = 2)
+            # Printing the result in a new window
+            result = Tk()
+            result.title("Search Result")
+            result.config(bg = "White")
 
-            query = Label(result, text = question)
-            answer = Message(result, text = ans)
+            # Printing the asked query first
+            query = Label(result, text = question, bg = "White", font = ("Serif", 10))
+            # Then the result found from wikipedia
+            answer = Message(result, text = ans, bg = "White", font = ("Serif", 10))
 
             query.grid(row = 0, padx = 10, pady = 10)
             answer.grid(row = 2, padx = 10, pady = 10)
@@ -149,15 +162,15 @@ threading.Thread(target = intro).start()
 
 # Main GUI page
 # Introduction label
-intro = Label(search, text = "Hello! I'm a Virtual Assistant. How can I help you?", font = ("Times", 15))
+intro = Label(search, text = "Hello! How can I help you?", font = ("Serif", 20), bg = "#282828", fg = "White")
 intro.grid(row = 0, columnspan = 2, padx = 10, pady = 10)
 
 # Text input widget
-inputtxt = Text(search, height = 2, width = 50)
+inputtxt = Text(search, height = 2, width = 50, border = 5, bg = "#B0C4DE", font =("Times", 15), fg = "Black", padx = 5, pady = 5)
 # Text search button widget
-inputbtn = Button(search, text = "Search", command = take_input, font = ("Times", 10))
+inputbtn = Button(search, text = "Search", command = take_input, font = ("Serif", 15), bg = "#8B2252", fg = "White")
 # Voice search button widget
-inputvoice = Button(search, text = "Voice Search", command = voice_search, font = ("Times", 10))
+inputvoice = Button(search, text = "Voice Search", command = voice_search, font = ("Serif", 15), bg = "#8B2252", fg = "White")
 
 # Displaying the widgets
 inputtxt.grid(row = 1, column = 0, padx = 10, pady = 10)
